@@ -1,5 +1,6 @@
+// @ts-check
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+const config = {
   darkMode: ["class"],
   content: [
     './pages/**/*.{js,jsx}',
@@ -18,6 +19,7 @@ module.exports = {
     },
     extend: {
       colors: {
+        darkcolor:"#09090b",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -74,4 +76,6 @@ module.exports = {
     },
   },
   plugins: [require("tailwindcss-animate")],
-}
+};
+
+module.exports = config;
