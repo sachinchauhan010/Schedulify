@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
 
 import { Button } from "./ui/button"
@@ -14,55 +14,118 @@ import {
 import { Input } from "./ui/input"
 import { Label } from "./ui/label"
 
-export default function Login() {
-  const [username, setUserName] = useState("")
-  const [password, setPassword] = useState("")
-  const [email, setEmail] = useState("")
+export default function AuthDialog() {
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+    name: '',
+    id: '',
+  })
   const [isRegistering, setIsRegistering] = useState(false)
+  const [isOpen, setIsOpen] = useState(false)
+
+  useEffect(() => {
+    if (!isOpen) {
+      setIsRegistering(false)
+      setFormData({
+        email: '',
+        password: '',
+        name: '',
+        id: '',
+      })
+    }
+  }, [isOpen])
+
+  const handleDialogOpen = () => setIsOpen(true)
+  const handleDialogClose = () => {
+    setIsOpen(false)
+  }
+
+  const handleInputChange = (e) => {
+    const { id, value } = e.target
+    setFormData(prevData => ({ ...prevData, [id]: value }))
+  }
+
+  const handleSubmit = () => {
+    if (isRegistering) {
+      console.log('Registering with data:', formData)
+    } else {
+      console.log('Logging in with data:', formData)
+    }
+    handleDialogClose()
+  }
 
   return (
-    <Dialog className="">
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Link className='text-right'>Login</Link>
+        <Link onClick={handleDialogOpen} className='text-right'>Login</Link>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] dark:text-[#fafafa]">
         <DialogHeader>
           <DialogTitle>{isRegistering ? 'Register' : 'Login'}</DialogTitle>
-          {/* <DialogDescription>
-            Make changes to your profile here. Click save when you&apos;re done.
-          </DialogDescription> */}
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="username" className="text-right">
-              User Name
+            <Label htmlFor="email" className="text-right">
+              Email
             </Label>
-            <Input id="username" value={username} className="col-span-3 rounded" onChange={(e) => setUserName(e.target.value)} />
+            <Input
+              id="email"
+              value={formData.email}
+              className="col-span-3 rounded"
+              onChange={handleInputChange}
+            />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
+            <Label htmlFor="password" className="text-right">
               Password
             </Label>
-            <Input id="name" value={password} className="col-span-3 rounded" type="password" onChange={(e) => setPassword(e.target.value)} />
+            <Input
+              id="password"
+              value={formData.password}
+              className="col-span-3 rounded"
+              type="password"
+              onChange={handleInputChange}
+            />
           </div>
           {isRegistering &&
-            <>
+            <div>
               <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="email" className="text-right">
-                  Email
+                <Label htmlFor="name" className="text-right">
+                  Name
                 </Label>
-                <Input id="email" value={email} className="col-span-3 rounded" onChange={(e) => setEmail(e.target.value)} />
+                <Input
+                  id="name"
+                  value={formData.name}
+                  className="col-span-3 rounded"
+                  onChange={handleInputChange}
+                />
               </div>
-            </>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="id" className="text-right">
+                  ID
+                </Label>
+                <Input
+                  id="id"
+                  value={formData.id}
+                  className="col-span-3 rounded"
+                  onChange={handleInputChange}
+                />
+              </div>
+            </div>
           }
         </div>
         <DialogFooter className="dark:text-[#fafafa]">
           <DialogClose asChild>
-            <Button type="submit" className="border-[1px] border-white dark:text-[#fafafa] rounded">Cancel</Button>
+            <Button type="button" className="border-[1px] border-white dark:text-[#fafafa] rounded" onClick={handleDialogClose}>Cancel</Button>
           </DialogClose>
-          <Button type="submit" className="dark:bg-[#fafafa] dark:text-[#09090b] rounded">{isRegistering ? 'Register' : 'Login'}</Button>
+          <Button type="button" className="dark:bg-[#fafafa] dark:text-[#09090b] rounded" onClick={handleSubmit}>
+            {isRegistering ? 'Register' : 'Login'}
+          </Button>
         </DialogFooter>
-        <Button onClick={() => setIsRegistering(!isRegistering)}>{isRegistering ? 'Login' : 'Register'}</Button>
+        <Button type="button" onClick={() => setIsRegistering(!isRegistering)} className='justify-end'>
+          {isRegistering ? 'Register Now!..' : 'Already account Login'}
+        </Button>
       </DialogContent>
     </Dialog>
   )
