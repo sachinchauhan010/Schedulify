@@ -36,13 +36,13 @@ function FileUpload() {
             </tr>
           </thead>
           <tbody>
-            {/* {data.map((row, index) => (
+            {data.map((row, index) => (
               <tr key={index}>
                 {Object.values(row).map((value, index) => (
                   <td key={index}>{value}</td>
                 ))}
               </tr>
-            ))} */}
+            ))}
           </tbody>
         </table>
       )}

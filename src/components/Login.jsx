@@ -65,6 +65,32 @@ export default function AuthDialog() {
           <DialogTitle>{isRegistering ? 'Register' : 'Login'}</DialogTitle>
         </DialogHeader>
         <div className="grid gap-4 py-4">
+        {isRegistering &&
+            <div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="name" className="text-right">
+                  Name
+                </Label>
+                <Input
+                  id="name"
+                  value={formData.name}
+                  className="col-span-3 rounded"
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4 mt-4">
+                <Label htmlFor="id" className="text-right">
+                  ID
+                </Label>
+                <Input
+                  id="id"
+                  value={formData.id}
+                  className="col-span-3 rounded"
+                  onChange={handleInputChange}
+                />
+              </div>
+            </div>
+          }
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="email" className="text-right">
               Email
@@ -88,32 +114,7 @@ export default function AuthDialog() {
               onChange={handleInputChange}
             />
           </div>
-          {isRegistering &&
-            <div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="name" className="text-right">
-                  Name
-                </Label>
-                <Input
-                  id="name"
-                  value={formData.name}
-                  className="col-span-3 rounded"
-                  onChange={handleInputChange}
-                />
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="id" className="text-right">
-                  ID
-                </Label>
-                <Input
-                  id="id"
-                  value={formData.id}
-                  className="col-span-3 rounded"
-                  onChange={handleInputChange}
-                />
-              </div>
-            </div>
-          }
+          
         </div>
         <DialogFooter className="dark:text-[#fafafa]">
           <DialogClose asChild>
@@ -124,7 +125,7 @@ export default function AuthDialog() {
           </Button>
         </DialogFooter>
         <Button type="button" onClick={() => setIsRegistering(!isRegistering)} className='justify-end'>
-          {isRegistering ? 'Register Now!..' : 'Already account Login'}
+          {isRegistering ? 'Already account Login' : 'Register Now!..'}
         </Button>
       </DialogContent>
     </Dialog>
