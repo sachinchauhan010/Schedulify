@@ -7,6 +7,8 @@ const config = {
     './components/**/*.{js,jsx}',
     './app/**/*.{js,jsx}',
     './src/**/*.{js,jsx}',
+    './src/components/ui/**/*.{js,jsx}'
+
   ],
   prefix: "",
   theme: {

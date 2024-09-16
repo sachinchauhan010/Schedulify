@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Table,
   TableBody,
@@ -8,7 +9,22 @@ import {
   TableRow,
 } from "./ui/table.jsx";
 
+import { Label } from "./ui/label";
+import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "./ui/alert-dialog";
+
 function ScheduleTable() {
+  const [openAlert, setOpenAlert] = useState(false);
+
   const scheduleData = [
     {
       period: "I",
@@ -18,6 +34,7 @@ function ScheduleTable() {
       year: "II",
       batch: "P2",
       classType: "Lab",
+      hallName: "Lab 101",
       attended: "Yes",
     },
     {
@@ -28,6 +45,7 @@ function ScheduleTable() {
       year: "II",
       batch: "P2",
       classType: "Theory",
+      hallName: "Room 202",
       attended: "No",
     },
     {
@@ -38,6 +56,7 @@ function ScheduleTable() {
       year: "II",
       batch: "P2",
       classType: "Lecture",
+      hallName: "Lecture Hall 3",
       attended: "Yes",
     },
     {
@@ -48,13 +67,20 @@ function ScheduleTable() {
       year: "II",
       batch: "P2",
       classType: "Theory",
+      hallName: "Room 204",
       attended: "No",
     },
   ];
 
+  const handleRadioChange = (value) => {
+    if (value === "no") {
+      setOpenAlert(true); // Open alert dialog when "No" is selected
+    }
+  };
+
   return (
     <div className="w-full px-10">
-      <div className="text-2xl text-center w-full">Today's Schedule</div>
+      <div className="text-2xl text-center w-full">Today&apos;s Schedule</div>
       <div className="text-xl font-medium p-2">Day: Monday</div>
       <Table>
         <TableCaption>Your schedule for the day</TableCaption>
@@ -67,7 +93,8 @@ function ScheduleTable() {
             <TableHead>Year</TableHead>
             <TableHead>Batch</TableHead>
             <TableHead>Class Type</TableHead>
-            <TableHead>Attended</TableHead>
+            <TableHead>Hall Name</TableHead>
+            <TableHead>Want to Attend</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -80,11 +107,44 @@ function ScheduleTable() {
               <TableCell>{item.year}</TableCell>
               <TableCell>{item.batch}</TableCell>
               <TableCell>{item.classType}</TableCell>
-              <TableCell>{item.attended}</TableCell>
+              <TableCell>{item.hallName}</TableCell>
+              <TableCell>
+                <RadioGroup
+                  defaultValue="yes"
+                  onValueChange={handleRadioChange} // Call when radio button changes
+                >
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="yes" id={`yes-${index}`} />
+                    <Label htmlFor={`yes-${index}`}>Yes</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="no" id={`no-${index}`} />
+                    <Label htmlFor={`no-${index}`}>No</Label>
+                  </div>
+                </RadioGroup>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
+
+      {/* Alert Dialog */}
+      <AlertDialog open={openAlert} onOpenChange={setOpenAlert}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className='text-white'>Are you absolutely sure?</AlertDialogTitle>
+            <AlertDialogDescription className='text-gray-400 font-medium'>
+              This action cannot be undone. You are about to skip the class.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter className='text-white'>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={() => setOpenAlert(false)}>
+              Continue
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

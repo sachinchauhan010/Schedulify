@@ -3,7 +3,7 @@ import ScheduleTable from "../components/ScheduleTable"
 
 function Hero() {
   return (
-    <div className="flex flex-col justify-arround items-center gap-20">
+    <div className="flex flex-col justify-start items-center gap-10">
       <FileUpload/>
       <ScheduleTable/>
     </div>

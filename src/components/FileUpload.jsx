@@ -21,17 +21,18 @@ function FileUpload() {
   return (
     <div>
 
-      <div className="shadow-2xl border-2 w-fit flex flex-col justify-center items-center">
-        <div className="text-2xl font-semibold p-4">Upload Your Time Table</div>
+      <div className="w-fit flex flex-col justify-center items-center text-center border-[2px] rounded ">
+        <div className="text-lg font-semibold py-2">Upload/Update Your Time Table</div>
         <input
           type="file"
           accept=".xlsx, .xls"
           onChange={handleFileUpload}
+          className="text-center px-4"
         />
 
         {data.length > 0 && (
           <table className="table">
-            <thead>
+            {/* <thead>
               <tr>
                 {Object.keys(data[0]).map((key) => (
                   <th key={key}>{key}</th>
@@ -46,7 +47,7 @@ function FileUpload() {
                   ))}
                 </tr>
               ))}
-            </tbody>
+            </tbody> */}
           </table>
         )}
 
