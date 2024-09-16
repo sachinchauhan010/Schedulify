@@ -13,6 +13,7 @@ import {
 } from "./ui/dialog"
 import { Input } from "./ui/input"
 import { Label } from "./ui/label"
+import { DialogDescription } from "@radix-ui/react-dialog"
 
 export default function AuthDialog() {
   const [formData, setFormData] = useState({
@@ -62,7 +63,8 @@ export default function AuthDialog() {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] dark:text-[#fafafa]">
         <DialogHeader>
-          <DialogTitle>{isRegistering ? 'Register' : 'Login'}</DialogTitle>
+          <DialogTitle className='text-center text-2xl'>{isRegistering ? 'Create an account' : 'Login'}</DialogTitle>
+          <DialogDescription>Enter your email to sign up for this web application</DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
         {isRegistering &&
@@ -126,7 +128,7 @@ export default function AuthDialog() {
         </DialogFooter>
         <Button type="button" onClick={() => setIsRegistering(!isRegistering)} className='justify-end'>
           {isRegistering ? 'Already account Login' : 'Register Now!..'}
-        </Button>
+        </Button> 
       </DialogContent>
     </Dialog>
   )

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 
 import { ThemeProvider } from "./contexts/theme"
 import Header from "./components/Header.jsx"
-import FileUpload from "./components/FileUpload.jsx"
+import Hero from "./pages/Hero.jsx"
 
 function App() {
 
@@ -26,7 +26,8 @@ function App() {
     <ThemeProvider value={{ themeMode, darkTheme, lightTheme }}>
       <div className="dark:bg-[#09090b] min-h-screen dark:text-[#fafafa] sm:px-4 lg:px-6">
         <Header />
-        <FileUpload />
+        <Hero />
+
       </div>
     </ThemeProvider>
   )
